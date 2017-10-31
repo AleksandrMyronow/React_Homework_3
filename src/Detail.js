@@ -2,35 +2,39 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
+
 class Detail extends Component {
   state  = {
     change: false,
-    date: this.props.item.date,
-    trackName: this.props.item.trackName,
+    id: this.props.params.id,
+    date: this.props.params.date
+
+
   };
   undo() {
 
   }
   render() {
     const { item } = this.props;
+      console.log(this.props);
     return (
       <div>
         Detail!!
         <input
           type="text"
-          defaultValue={this.state.trackName}
+          defaultValue={this.state.id}
           onChange={e =>
-            e.target.value !== this.state.trackName ?
-              this.setState({ change: true }) : this.setState({ change: false })}
+            e.target.value !== this.state.id ?
+              this.setState({ change: true, id: e.target.value}) : this.setState({ change: false })}
         />
         <input
           type="text"
           defaultValue={this.state.date}
-          onChange={e =>
-            e.target.value !== this.state.date ?
-              this.setState({change: true }) : this.setState({ change: false })}
+           onChange={e =>
+             e.target.value !== this.state.date ?
+               this.setState({change: true, date: e.target.value }) : this.setState({ change: false })}
         />
-        <button disabled={!this.state.change} onClick={() => this.props.onUpdateTrack(item.date, item.trackName)}>Save</button>
+        <button disabled={!this.state.change} onClick={() => this.props.onUpdateTrack(this.state.id, this.state.date)}>Save</button>
         <button
           disabled={!this.state.change}
           onClick={this.undo}
@@ -40,18 +44,33 @@ class Detail extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-    data: state
-});
+const mapStateToProps = (state, params) =>  {
+    console.log('params', params);
 
-const mapDispatchToProps = (dispatch, state, props) => {
+    return ({
+        data: state.filter(params => params.date === params.params)
+
+
+    });
+
+};
+
+
+
+// const mapStateToProps = (state, params) => ({
+//     date: state,
+//     id: state
+//
+// });
+
+const mapDispatchToProps = (dispatch) => {
     return {
-        onUpdateTrack: (date, trackName) => dispatch({
-            item: state.filter(item => item.date === props.params.date)[0],
+        onUpdateTrack: (id, date) => dispatch({
             type: 'UPDATE_TRACK',
             payload: {
-                date,
-                trackName
+                id: id,
+                date: date
+
             }
         })
     }

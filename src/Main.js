@@ -8,7 +8,7 @@ class Main extends Component {
   }
 
   render() {
-    console.log(this.props.data);
+    // console.log(this.props.data);
     return (
       <div>
         <input type="text" ref={(input) => {this.trackInput = input }}/>
@@ -24,17 +24,17 @@ class Main extends Component {
           </thead>
           <tbody>
           {
-            this.props.data.map( (item, key) => (
-              <tr key={key}>
+            this.props.data.map( (item, id) => (
+              <tr id={id}>
                 <td>{item.date}</td>
-                <td>{item.trackName}</td>
+                <td>{item.id}</td>
                 <td>
                   <Link to={`/detail/${item.date}`}>
                     View details
                   </Link>
                 </td>
                 <td>
-                  <button onClick={() => this.props.onDeleteTrack(key)}>
+                  <button onClick={() => this.props.onDeleteTrack(id)}>
                     Delete
                   </button>
                 </td>
@@ -58,16 +58,16 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    onAddTrack: trackName => dispatch({
+    onAddTrack: id => dispatch({
         type: 'ADD_TRACK',
         payload: {
-            trackName,
-            date: new Date().valueOf(),
+            id,
+            date: new Date().toLocaleTimeString(),
         },
     }),
-    onDeleteTrack: key => dispatch({
+    onDeleteTrack: id => dispatch({
         type: 'DELETE_TRACK',
-        payload: key
+        payload: id
     })
     // ,
     // onUpdateTrack: (date, trackName) => dispatch({
