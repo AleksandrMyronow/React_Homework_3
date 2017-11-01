@@ -45,17 +45,16 @@ function playlist(state = initial, action) {
         }
             break;
         case 'UPDATE_TRACK': {
-            console.log(action, state);
-            state[action.payload.key] = action.payload.id;
-            return [
-                ...state,
-            state.map(item => item.id === action.payload.id ? { id: action.payload.id, date: action.payload.date} : state)
-            ];
-            // return state.map(item => item.id === action.payload.id ? { id: action.payload.id, date: action.payload.date} : state);
-
+            console.log(action.payload.id, action.payload.date);
+            // console.log(action, state, action.payload.id, state[0].id);
+            // state[action.payload.key] = action.payload.id;
+            state.map(item => item.id === action.payload.id ? { id: action.payload.id, date: action.payload.date} : item);
+            // return [
+            //     ...state,
+            // ]
         }
-            break;
 
+            break;
     }
     return state;
 }
