@@ -24,8 +24,8 @@ class Main extends Component {
           </thead>
           <tbody>
           {
-            this.props.data.map( (item, id) => (
-              <tr id={id}>
+            this.props.data.map( (item, id, key) => (
+              <tr id={key}>
                 <td>{item.date}</td>
                 <td>{item.id}</td>
                 <td>

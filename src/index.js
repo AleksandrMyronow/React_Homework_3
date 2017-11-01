@@ -45,15 +45,14 @@ function playlist(state = initial, action) {
         }
             break;
         case 'UPDATE_TRACK': {
-            console.log(action.payload.id, action.payload.date);
+            console.log(state);
             // console.log(action, state, action.payload.id, state[0].id);
             // state[action.payload.key] = action.payload.id;
-            state.map(item => item.id === action.payload.id ? { id: action.payload.id, date: action.payload.date} : item);
-            // return [
-            //     ...state,
-            // ]
+            return [
+                ...state.filter(item => item.id !== action.payload.id),
+                action.payload,
+            ]
         }
-
             break;
     }
     return state;
